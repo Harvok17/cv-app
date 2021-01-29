@@ -1,0 +1,43 @@
+.section {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.section__title {
+  color: grey;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.section__item {
+  position: relative;
+  padding-left: 180px;
+  margin-bottom: 30px;
+}
+
+.section__info {
+  line-height: 1.7rem;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.primary {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.secondary {
+  font-size: 1rem;
+  font-weight: bold;
+  color: grey;
+}
+
+.date {
+  color: grey;
+  margin: 6px 0 6px 0;
+}
+
+.skills-text {
+  width: 80%;
+}

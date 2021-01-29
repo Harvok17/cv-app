@@ -1,0 +1,36 @@
+.header__general-info {
+  position: relative;
+}
+
+.header__name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.header__introduction {
+  padding-right: 100px;
+  margin-bottom: 10px;
+  line-height: 1.7rem;
+}
+
+.header__introduction--text {
+  margin-bottom: 10px;
+  width: 80%;
+}
+
+.header__contact-details {
+  font-size: 0.9rem;
+  line-height: 1.5rem;
+  font-weight: bold;
+  display: flex;
+}
+
+.header__contact-details p {
+  margin-right: 40px;
+}
+
+.header__contact-details input {
+  margin-right: 40px;
+  padding: 5px 10px;
+}
