@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/Harvok17/cv-app/static/css/main.8a6b84f2.chunk.css",
+    "main.js": "/Harvok17/cv-app/static/js/main.928edabd.chunk.js",
+    "main.js.map": "/Harvok17/cv-app/static/js/main.928edabd.chunk.js.map",
+    "runtime-main.js": "/Harvok17/cv-app/static/js/runtime-main.da7bd2d7.js",
+    "runtime-main.js.map": "/Harvok17/cv-app/static/js/runtime-main.da7bd2d7.js.map",
+    "static/js/2.9ba6299c.chunk.js": "/Harvok17/cv-app/static/js/2.9ba6299c.chunk.js",
+    "static/js/2.9ba6299c.chunk.js.map": "/Harvok17/cv-app/static/js/2.9ba6299c.chunk.js.map",
+    "index.html": "/Harvok17/cv-app/index.html",
+    "static/css/main.8a6b84f2.chunk.css.map": "/Harvok17/cv-app/static/css/main.8a6b84f2.chunk.css.map",
+    "static/js/2.9ba6299c.chunk.js.LICENSE.txt": "/Harvok17/cv-app/static/js/2.9ba6299c.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.da7bd2d7.js",
+    "static/js/2.9ba6299c.chunk.js",
+    "static/css/main.8a6b84f2.chunk.css",
+    "static/js/main.928edabd.chunk.js"
+  ]
+}
