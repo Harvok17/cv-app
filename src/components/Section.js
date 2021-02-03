@@ -1,41 +1,37 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/Section.css';
 import { FaTrashAlt } from 'react-icons/fa';
 import uniqid from 'uniqid';
 
-class Section extends Component {
-  state = {
-    items: [...this.props.items],
-  };
+const Section = props => {
+  const [items, setItems] = useState([]);
 
-  static defaultProps = {
-    buttons: true,
-  };
+  useEffect(() => {
+    for (let i = 0; i < props.items; i++) {
+      addItem();
+    }
+  }, [props.items]);
 
-  deleteItem = e => {
+  const deleteItem = e => {
     const targetId = e.target.closest('.section__item').id;
 
-    this.setState({
-      items: this.state.items.filter(item => item !== targetId),
-    });
+    setItems(items.filter(item => item !== targetId));
   };
 
-  addItem = () => {
-    this.setState({
-      items: this.state.items.concat(uniqid()),
-    });
+  const addItem = () => {
+    setItems(prevItems => prevItems.concat(uniqid()));
   };
 
-  displayItems() {
-    const { buttons, previewMode, darkMode, children } = this.props;
+  const displayItems = () => {
+    const { buttons, previewMode, darkMode, children } = props;
 
-    return this.state.items.map(item => {
+    return items.map(item => {
       return (
         <div key={item} id={item} className="section__item">
           {buttons && !previewMode ? (
             <button
               className={`btn btn--delete ${darkMode ? 'dark' : ''}`}
-              onClick={this.deleteItem}
+              onClick={deleteItem}
             >
               <FaTrashAlt />
             </button>
@@ -44,27 +40,29 @@ class Section extends Component {
         </div>
       );
     });
-  }
+  };
 
-  displayAddBtn() {
-    const { buttons, previewMode } = this.props;
+  const displayAddBtn = () => {
+    const { buttons, previewMode } = props;
     return buttons && !previewMode ? (
-      <button className="btn btn--add" onClick={this.addItem}>
+      <button className="btn btn--add" onClick={addItem}>
         Add
       </button>
     ) : null;
-  }
+  };
 
-  render() {
-    const { title } = this.props;
-    return (
-      <section className="section">
-        <h3 className="section__title">{title}</h3>
-        {this.displayItems()}
-        {this.displayAddBtn()}
-      </section>
-    );
-  }
-}
+  const { title } = props;
+  return (
+    <section className="section">
+      <h3 className="section__title">{title}</h3>
+      {displayItems()}
+      {displayAddBtn()}
+    </section>
+  );
+};
 
 export default Section;
+
+Section.defaultProps = {
+  buttons: true,
+};

@@ -1,54 +1,52 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
 
-class Skills extends Component {
-  state = {
-    skills: 'HTML - CSS - JavaScript - Figma - ReactJS - Webpack',
-    editMode: false,
+const Skills = props => {
+  const [skills, setSkills] = useState(
+    'HTML - CSS - JavaScript - Figma - ReactJS - Webpack'
+  );
+  const [editMode, setEditMode] = useState(false);
+
+  const changeHandler = e => {
+    setSkills(e.target.value);
   };
 
-  changeHandler = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
-  saveOrEdit = e => {
+  const saveOrEdit = e => {
     e.preventDefault();
-    this.setState({ editMode: !this.state.editMode });
+    setEditMode(!editMode);
   };
 
-  displaySkills() {
-    return this.state.editMode ? (
-      <form onSubmit={this.saveOrEdit}>
+  const displaySkills = () => {
+    return editMode ? (
+      <form onSubmit={saveOrEdit}>
         <textarea
           name="skills"
           rows="4"
           placeholder="Enter your skills here"
           className="primary skills-text"
-          value={this.state.skills}
-          onChange={this.changeHandler}
+          value={skills}
+          onChange={changeHandler}
         ></textarea>
-        <button className="btn btn--save" onClick={this.saveOrEdit}>
+        <button className="btn btn--save" onClick={saveOrEdit}>
           Save
         </button>
       </form>
     ) : (
       <div>
-        <p className="primary">{this.state.skills}</p>
-        {this.props.previewMode ? null : (
+        <p className="primary">{skills}</p>
+        {props.previewMode ? null : (
           <button
-            className={`btn btn--edit ${this.props.darkMode ? 'dark' : ''}`}
-            onClick={this.saveOrEdit}
+            className={`btn btn--edit ${props.darkMode ? 'dark' : ''}`}
+            onClick={saveOrEdit}
           >
             <FaEdit />
           </button>
         )}
       </div>
     );
-  }
+  };
 
-  render() {
-    return <div>{this.displaySkills()}</div>;
-  }
-}
+  return <div>{displaySkills()}</div>;
+};
 
 export default Skills;

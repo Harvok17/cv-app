@@ -1,34 +1,35 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
 
-class Education extends Component {
-  state = {
+const Education = props => {
+  const [form, setState] = useState({
     school: 'School',
     course: 'Course',
     dateStart: '[Month] [Year]',
     dateEnd: '[Month] [Year]',
-    editMode: false,
+  });
+
+  const [editMode, setEditMode] = useState(false);
+
+  const changeHandler = e => {
+    setState({ ...form, [e.target.name]: e.target.value });
   };
 
-  changeHandler = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
-  saveOrEdit = e => {
+  const saveOrEdit = e => {
     e.preventDefault();
-    this.setState({ editMode: !this.state.editMode });
+    setEditMode(!editMode);
   };
 
-  displaySchool() {
-    return this.state.editMode ? (
-      <form onSubmit={this.saveOrEdit}>
+  const displaySchool = () => {
+    return editMode ? (
+      <form onSubmit={saveOrEdit}>
         <input
           type="text"
           name="school"
           className="primary"
           placeholder="Enter School"
-          value={this.state.school}
-          onChange={this.changeHandler}
+          value={form.school}
+          onChange={changeHandler}
         />{' '}
         •{' '}
         <input
@@ -36,8 +37,8 @@ class Education extends Component {
           name="course"
           className="secondary"
           placeholder="Enter Course"
-          value={this.state.course}
-          onChange={this.changeHandler}
+          value={form.course}
+          onChange={changeHandler}
         />
         <br />
         <input
@@ -45,8 +46,8 @@ class Education extends Component {
           name="dateStart"
           className="date"
           placeholder="[Month] [Year]"
-          value={this.state.dateStart}
-          onChange={this.changeHandler}
+          value={form.dateStart}
+          onChange={changeHandler}
         />{' '}
         -{' '}
         <input
@@ -54,38 +55,36 @@ class Education extends Component {
           name="dateEnd"
           className="date"
           placeholder="[Month] [Year]"
-          value={this.state.dateEnd}
-          onChange={this.changeHandler}
+          value={form.dateEnd}
+          onChange={changeHandler}
         />
-        <button className="btn btn--save" onClick={this.saveOrEdit}>
+        <button className="btn btn--save" onClick={saveOrEdit}>
           Save
         </button>
       </form>
     ) : (
       <div>
         <p>
-          <span className="primary">{this.state.school}</span> •{' '}
-          <span className="secondary">{this.state.course}</span>
+          <span className="primary">{form.school}</span> •{' '}
+          <span className="secondary">{form.course}</span>
         </p>
         <p className="date">
-          {this.state.dateStart} - {this.state.dateEnd}
+          {form.dateStart} - {form.dateEnd}
         </p>
 
-        {this.props.previewMode ? null : (
+        {props.previewMode ? null : (
           <button
-            className={`btn btn--edit ${this.props.darkMode ? 'dark' : ''}`}
-            onClick={this.saveOrEdit}
+            className={`btn btn--edit ${props.darkMode ? 'dark' : ''}`}
+            onClick={saveOrEdit}
           >
             <FaEdit />
           </button>
         )}
       </div>
     );
-  }
+  };
 
-  render() {
-    return <div>{this.displaySchool()}</div>;
-  }
-}
+  return <div>{displaySchool()}</div>;
+};
 
 export default Education;
