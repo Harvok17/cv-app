@@ -17,13 +17,6 @@ const App = () => {
   };
 
   const enablePreviewMode = () => {
-    if (!document.querySelector('.btn--save')) {
-      setPreview(!previewMode);
-      return;
-    }
-
-    // document.querySelectorAll('.btn--save').forEach(btn => btn.click());
-
     setPreview(!previewMode);
   };
 
