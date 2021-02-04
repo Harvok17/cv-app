@@ -1,16 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../styles/GeneralInfo.css';
 import { FaEdit } from 'react-icons/fa';
+import { useForm } from './useFormHook';
 
 const GeneralInfo = props => {
-  const [name, setName] = useState('Your Name');
-  const [introduction, setIntro] = useState(
-    'I am a [Current Position], currently working at [Current Company]. I help companies build products from zero to one. This is a brief description about you. Write some details about yourself, and make it meaningful. Maximum 3 lines of text.'
-  );
-  const [link, setLink] = useState('your-porfolio.com');
-  const [email, setEmail] = useState('your@email.com');
-  const [number, setNumber] = useState('080909999');
+  const [values, handleChange] = useForm({
+    name: 'Your Name',
+    introduction:
+      'I am a [Current Position], currently working at [Current Company]. I help companies build products from zero to one. This is a brief description about you. Write some details about yourself, and make it meaningful. Maximum 3 lines of text.',
+    link: 'your-porfolio.com',
+    email: 'your@email.com',
+    number: '080909999',
+  });
   const [editMode, setEditMode] = useState(false);
+  const btnRef = useRef();
+
+  useEffect(() => {
+    props.previewMode && btnRef.current && btnRef.current.click();
+  }, [props.previewMode]);
 
   const saveOrEdit = e => {
     e.preventDefault();
@@ -25,8 +32,8 @@ const GeneralInfo = props => {
           name="name"
           className="header__name"
           placeholder="Enter name"
-          value={name}
-          onChange={e => setName(e.target.value)}
+          value={values.name}
+          onChange={handleChange}
         />
         <br />
         <textarea
@@ -34,44 +41,49 @@ const GeneralInfo = props => {
           rows="4"
           placeholder="Enter your introduction here..."
           className="header__introduction--text"
-          value={introduction}
-          onChange={e => setIntro(e.target.value)}
+          value={values.introduction}
+          onChange={handleChange}
         ></textarea>
         <div className="header__contact-details">
           <input
             type="text"
             name="link"
             placeholder="Enter link"
-            value={link}
-            onChange={e => setLink(e.target.value)}
+            value={values.link}
+            onChange={handleChange}
           />
           <input
             type="email"
             name="email"
             placeholder="Enter email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
+            value={values.email}
+            onChange={handleChange}
           />
           <input
             type="number"
             name="number"
             placeholder="Enter number"
-            value={number}
-            onChange={e => setNumber(e.target.value)}
+            value={values.number}
+            onChange={handleChange}
           />
         </div>
-        <button type="submit" onClick={saveOrEdit} className="btn btn--save">
+        <button
+          ref={btnRef}
+          type="submit"
+          onClick={saveOrEdit}
+          className="btn btn--save"
+        >
           Save
         </button>
       </form>
     ) : (
       <div>
-        <p className="header__name">{name}</p>
-        <p className="header__introduction">{introduction}</p>
+        <p className="header__name">{values.name}</p>
+        <p className="header__introduction">{values.introduction}</p>
         <div className="header__contact-details">
-          <p>{link}</p>
-          <p>{email}</p>
-          <p>{number}</p>
+          <p>{values.link}</p>
+          <p>{values.email}</p>
+          <p>{values.number}</p>
         </div>
 
         {props.previewMode ? null : (

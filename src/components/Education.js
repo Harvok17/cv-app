@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FaEdit } from 'react-icons/fa';
+import { useForm } from './useFormHook';
 
 const Education = props => {
-  const [form, setState] = useState({
+  const [values, hanldeChange] = useForm({
     school: 'School',
     course: 'Course',
     dateStart: '[Month] [Year]',
@@ -11,9 +12,11 @@ const Education = props => {
 
   const [editMode, setEditMode] = useState(false);
 
-  const changeHandler = e => {
-    setState({ ...form, [e.target.name]: e.target.value });
-  };
+  const btnRef = useRef();
+
+  useEffect(() => {
+    props.previewMode && btnRef.current && btnRef.current.click();
+  }, [props.previewMode]);
 
   const saveOrEdit = e => {
     e.preventDefault();
@@ -28,8 +31,8 @@ const Education = props => {
           name="school"
           className="primary"
           placeholder="Enter School"
-          value={form.school}
-          onChange={changeHandler}
+          value={values.school}
+          onChange={hanldeChange}
         />{' '}
         •{' '}
         <input
@@ -37,8 +40,8 @@ const Education = props => {
           name="course"
           className="secondary"
           placeholder="Enter Course"
-          value={form.course}
-          onChange={changeHandler}
+          value={values.course}
+          onChange={hanldeChange}
         />
         <br />
         <input
@@ -46,8 +49,8 @@ const Education = props => {
           name="dateStart"
           className="date"
           placeholder="[Month] [Year]"
-          value={form.dateStart}
-          onChange={changeHandler}
+          value={values.dateStart}
+          onChange={hanldeChange}
         />{' '}
         -{' '}
         <input
@@ -55,21 +58,21 @@ const Education = props => {
           name="dateEnd"
           className="date"
           placeholder="[Month] [Year]"
-          value={form.dateEnd}
-          onChange={changeHandler}
+          value={values.dateEnd}
+          onChange={hanldeChange}
         />
-        <button className="btn btn--save" onClick={saveOrEdit}>
+        <button ref={btnRef} className="btn btn--save" onClick={saveOrEdit}>
           Save
         </button>
       </form>
     ) : (
       <div>
         <p>
-          <span className="primary">{form.school}</span> •{' '}
-          <span className="secondary">{form.course}</span>
+          <span className="primary">{values.school}</span> •{' '}
+          <span className="secondary">{values.course}</span>
         </p>
         <p className="date">
-          {form.dateStart} - {form.dateEnd}
+          {values.dateStart} - {values.dateEnd}
         </p>
 
         {props.previewMode ? null : (

@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FaEdit } from 'react-icons/fa';
+import { useForm } from './useFormHook';
 
 const Experience = props => {
-  const [company, setCompany] = useState('Company');
-  const [position, setPosition] = useState('Position');
-  const [dateStart, setDateStart] = useState('[Month] [Year]');
-  const [dateEnd, setDateEnd] = useState('[Month] [Year]');
-  const [description, setDescription] = useState(
-    'Some stuff about the work that you’ve done here. It would be good if you can include responsibilities and achievements, as well as the extra miles that you have done. Don’t make it too long, keep it short but meaningful. Maximum 10 lines?'
-  );
+  const [values, handleChange] = useForm({
+    company: 'Company',
+    position: 'Position',
+    dateStart: '[Month] [Year]',
+    dateEnd: '[Month] [Year]',
+    description:
+      'Some stuff about the work that you’ve done here. It would be good if you can include responsibilities and achievements, as well as the extra miles that you have done. Don’t make it too long, keep it short but meaningful. Maximum 10 lines?',
+  });
   const [editMode, setEditMode] = useState(false);
+  const btnRef = useRef();
+
+  useEffect(() => {
+    props.previewMode && btnRef.current && btnRef.current.click();
+  }, [props.previewMode]);
 
   const saveOrEdit = e => {
     e.preventDefault();
@@ -24,8 +31,8 @@ const Experience = props => {
           name="company"
           className="primary"
           placeholder="Enter Company"
-          value={company}
-          onChange={e => setCompany(e.target.value)}
+          value={values.company}
+          onChange={handleChange}
         />{' '}
         •{' '}
         <input
@@ -33,8 +40,8 @@ const Experience = props => {
           name="position"
           className="secondary"
           placeholder="Enter Position"
-          value={position}
-          onChange={e => setPosition(e.target.value)}
+          value={values.position}
+          onChange={handleChange}
         />
         <br />
         <input
@@ -42,8 +49,8 @@ const Experience = props => {
           name="dateStart"
           className="date"
           placeholder="[Month] [Year]"
-          value={dateStart}
-          onChange={e => setDateStart(e.target.value)}
+          value={values.dateStart}
+          onChange={handleChange}
         />{' '}
         -{' '}
         <input
@@ -51,31 +58,31 @@ const Experience = props => {
           name="dateEnd"
           className="date"
           placeholder="[Month] [Year]"
-          value={dateEnd}
-          onChange={e => setDateEnd(e.target.value)}
+          value={values.dateEnd}
+          onChange={handleChange}
         />
         <br />
         <textarea
           name="description"
           rows="4"
           placeholder="Some stuff about the work that you’ve done here."
-          value={description}
-          onChange={e => setDescription(e.target.value)}
+          value={values.description}
+          onChange={handleChange}
         ></textarea>
-        <button className="btn btn--save" onClick={saveOrEdit}>
+        <button ref={btnRef} className="btn btn--save" onClick={saveOrEdit}>
           Save
         </button>
       </form>
     ) : (
       <div>
         <p>
-          <span className="primary">{company}</span> •{' '}
-          <span className="secondary">{position}</span>
+          <span className="primary">{values.company}</span> •{' '}
+          <span className="secondary">{values.position}</span>
         </p>
         <p className="date">
-          {dateStart} - {dateEnd}
+          {values.dateStart} - {values.dateEnd}
         </p>
-        <p className="description">{description}</p>
+        <p className="description">{values.description}</p>
         {props.previewMode ? null : (
           <button
             className={`btn btn--edit ${props.darkMode ? 'dark' : ''}`}

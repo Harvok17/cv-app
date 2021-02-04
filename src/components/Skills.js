@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FaEdit } from 'react-icons/fa';
 
 const Skills = props => {
@@ -6,6 +6,11 @@ const Skills = props => {
     'HTML - CSS - JavaScript - Figma - ReactJS - Webpack'
   );
   const [editMode, setEditMode] = useState(false);
+  const btnRef = useRef();
+
+  useEffect(() => {
+    props.previewMode && btnRef.current && btnRef.current.click();
+  }, [props.previewMode]);
 
   const changeHandler = e => {
     setSkills(e.target.value);
@@ -27,7 +32,7 @@ const Skills = props => {
           value={skills}
           onChange={changeHandler}
         ></textarea>
-        <button className="btn btn--save" onClick={saveOrEdit}>
+        <button ref={btnRef} className="btn btn--save" onClick={saveOrEdit}>
           Save
         </button>
       </form>

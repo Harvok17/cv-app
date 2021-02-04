@@ -22,7 +22,7 @@ const App = () => {
       return;
     }
 
-    document.querySelectorAll('.btn--save').forEach(btn => btn.click());
+    // document.querySelectorAll('.btn--save').forEach(btn => btn.click());
 
     setPreview(!previewMode);
   };
